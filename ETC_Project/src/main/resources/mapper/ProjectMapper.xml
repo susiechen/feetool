@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.etc.spring.dao.ProjectMapper">
+
+    <resultMap type="com.etc.spring.model.Project" id="projectMap">
+        <id property="project_id" column="project_id"/>
+        <result property="project_name" column="project_name"/>
+        <result property="platformName" column="platformName"/>
+        <result property="deviceName" column="deviceName"/>
+        <result property="pVersion" column="pVersion"/>
+        <result property="browserName" column="browserName"/>
+    </resultMap>
+
+    <select id="getProjectList" resultType="java.util.List" resultMap="projectMap">
+              <![CDATA[
+	        select * from etc_project
+        ]]>
+       </select>
+
+    <select id="pageList"  resultMap="projectMap">
+<![CDATA[
+
+    select * from etc_project ORDER BY project_id DESC
+
+
+        ]]>
+    </select>
+    <!--查询项目总数-->
+    <select id="pageCounts" resultType="long">
+    <![CDATA[
+
+
+
+	   select count(*) from etc_project
+
+
+
+        ]]>
+    </select>
+    <select id="searchDevices" parameterType="int" resultType="java.util.List" resultMap="projectMap">
+        <![CDATA[
+
+
+           select * from etc_project where project_id =#{project_id}
+
+
+        ]]>
+    </select>
+    <delete id="delProject" parameterType="int">
+        <![CDATA[
+
+
+            delete from etc_project where project_id=#{project_id}
+
+
+        ]]>
+    </delete>
+
+    <update id="updateProject" parameterType="com.etc.spring.model.Project">
+        <![CDATA[
+
+
+            update etc_project set project_name=#{project_name,jdbcType=VARCHAR} where project_id =#{project_id}
+
+
+        ]]>
+    </update>
+
+    <update id="updateDevices" parameterType="com.etc.spring.model.Project">
+        <![CDATA[
+
+
+            update etc_project set platformName=#{platformName,jdbcType=VARCHAR},deviceName=#{deviceName,jdbcType=VARCHAR},pVersion=#{pVersion,jdbcType=VARCHAR},browserName=#{browserName,jdbcType=VARCHAR} where project_id =#{project_id}
+
+
+        ]]>
+    </update>
+    <!--查询匹配的项目，支持模糊查询-->
+    <select id="searchProject" parameterType="map" resultType="java.util.List" resultMap="projectMap">
+        <![CDATA[
+
+
+
+         select * from etc_project where project_name like '%${project_name}%'and  project_id limit #{startIndex},#{endIndex}
+
+
+
+        ]]>
+    </select>
+    <!--查询匹配的项目总数-->
+    <select id="searchProjectCounts" resultType="long">
+        <![CDATA[
+
+
+
+	   select count(*) from etc_project where project_name like '%${_parameter}%'
+
+
+
+        ]]>
+    </select>
+    <!--新增项目-->
+    <insert id="addProject" parameterType="String">
+        <![CDATA[
+
+
+
+	   insert into etc_project (project_name) values ( '${_parameter}')
+
+
+
+        ]]>
+    </insert>
+    <!--查询项目是否存在-->
+    <select id="searchProjectIsExist" parameterType="long" resultType="int">
+        <![CDATA[
+
+
+         select count(*) from etc_project where project_id =#{project_id}
+
+
+        ]]>
+    </select>
+    <select id="verifyProjectNameIsExist" parameterType="String" resultType="int">
+        <![CDATA[
+
+
+         select count(*) from etc_project where project_name ='${_parameter}'
+
+
+        ]]>
+    </select>
+</mapper>

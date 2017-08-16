@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.etc.spring.dao.TestCaseMapper">
+
+    <resultMap type="com.etc.spring.model.TestCase" id="testCaseMapper">
+        <id property="tc_id" column="tc_id"/>
+        <result property="project_id" column="project_id"/>
+        <result property="tc_name" column="tc_name"/>
+        <result property="priority" column="priority"/>
+        <result property="tc_step" column="tc_step"/>
+        <result property="result_verify" column="result_verify"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    <resultMap type="com.etc.spring.model.OperateStep" id="operateStepMapper">
+        <id property="tc_step_id" column="tc_step_id"/>
+        <result property="tc_step" column="tc_step"/>
+        <result property="command" column="command"/>
+        <result property="target" column="target"/>
+        <result property="elementvalue" column="elementvalue"/>
+        <result property="meno" column="meno"/>
+        <result property="screamshot" column="screamshot"/>
+    </resultMap>
+    <resultMap type="com.etc.spring.model.ResultVerify" id="resultVerifyMapper">
+        <id property="tc_verify_id" column="tc_verify_id"/>
+        <result property="result_verify" column="result_verify"/>
+        <result property="command" column="command"/>
+        <result property="target" column="target"/>
+        <result property="elementvalue" column="elementvalue"/>
+        <result property="property" column="property"/>
+        <result property="paramater" column="paramater"/>
+        <result property="expectedvalue" column="expectedvalue"/>
+    </resultMap>
+    <resultMap type="com.etc.spring.model.Project" id="projectMap">
+        <id property="project_id" column="project_id"/>
+        <result property="project_name" column="project_name"/>
+        <result property="platformName" column="platformName"/>
+        <result property="deviceName" column="deviceName"/>
+        <result property="pVersion" column="pVersion"/>
+        <result property="browserName" column="browserName"/>
+    </resultMap>
+
+    <select id="testCaseList" parameterType="map" resultType="java.util.List" resultMap="testCaseMapper">
+<![CDATA[
+
+         select * from etc_testcase where project_id=#{project_id} and  tc_id limit #{startIndex},#{endIndex}
+
+        ]]>
+    </select>
+    <select id="testCaseCounts"  resultType="long"  parameterType="int">
+    <![CDATA[
+	   select count(*) from etc_testcase where project_id=#{project_id}
+        ]]>
+    </select>
+    <delete id="delTestCase"   parameterType="int">
+        <![CDATA[
+            delete from etc_testcase where tc_id=#{tc_id}
+          ]]>
+    </delete>
+    <update id="updateTestCase" parameterType="com.etc.spring.model.TestCase">
+        <![CDATA[
+            update etc_testcase set tc_name=#{tc_name},priority =#{priority} where tc_id =#{tc_id}
+          ]]>
+    </update>
+    <!--根据项目名称获取项目中的用例-->
+    <select id="getCaseByProjectName"  resultType="java.util.List" parameterType="map" resultMap="testCaseMapper">
+        <![CDATA[
+	   SELECT * from etc_testcase where tc_id in (select tc_id from etc_project where project_name = #{project_name}) and  tc_id limit #{startIndex},#{endIndex}
+        ]]>
+    </select>
+    <select id="getCaseCountByProjectName"  resultType="long" parameterType="String">
+        <![CDATA[
+	      SELECT count(*) from etc_testcase where tc_id in (select tc_id from etc_project where project_name ='${_parameter}')
+        ]]>
+    </select>
+    <select id="getTestCaseOperate"  resultMap="testCaseMapper" parameterType="int">
+        <![CDATA[
+	      SELECT * from etc_testcase where tc_id  =#{tc_id}
+        ]]>
+    </select>
+    <insert id="newTestCase" parameterType="map">
+        <![CDATA[
+          insert into etc_testcase (project_id,tc_name,priority,tc_step,result_verify,remark) values (#{project_id},#{tc_name},#{priority},#{tc_step},#{result_verify},#{remark});
+        ]]>
+    </insert>
+    <insert id="newTestStep" parameterType="map">
+    <![CDATA[
+          insert into tc_operate_step (tc_step,command,target,elementvalue,meno,screamshot) values (#{tc_step},#{command},#{target},#{elementvalue},#{meno},#{screamshot});
+        ]]>
+</insert>
+    <insert id="newVerifyStep" parameterType="map">
+        <![CDATA[
+          insert into tc_result_verify (result_verify,command,target,elementvalue,property,paramater,expectedvalue) values (#{result_verify},#{command},#{target},#{elementvalue},#{property},#{paramater},#{expectedvalue});
+        ]]>
+    </insert>
+    <select id="getTestStep" parameterType="map" resultMap="operateStepMapper">
+        <![CDATA[
+          select * from  tc_operate_step where tc_operate_step.tc_step in (select tc_step from etc_testcase where tc_name=#{tc_name} and  project_id=#{project_id});
+        ]]>
+    </select>
+    <select id="getVerifyStep" parameterType="map" resultMap="resultVerifyMapper">
+        <![CDATA[
+            select * from  tc_result_verify where tc_result_verify.result_verify in (select result_verify from etc_testcase where tc_name=#{tc_name} and  project_id=#{project_id});
+        ]]>
+    </select>
+
+    <delete id="delOperateStep" parameterType="map">
+        <![CDATA[
+        delete from tc_operate_step where tc_operate_step.tc_step in (select tc_step from etc_testcase where tc_name=#{tc_name} and  project_id=#{project_id});
+        ]]>
+    </delete>
+    <delete id="delResultVerify" parameterType="map">
+        <![CDATA[
+        delete from tc_result_verify where tc_result_verify.result_verify in (select result_verify from etc_testcase where tc_name=#{tc_name} and  project_id=#{project_id});
+        ]]>
+    </delete>
+    <update id="updateEditTestCase" parameterType="map">
+        <![CDATA[
+        update etc_testcase set priority =#{priority},remark=#{remark} where tc_name=#{tc_name} and project_id=#{project_id};
+        ]]>
+    </update>
+    <select id="getTcStepNumber" parameterType="map" resultType="long">
+        <![CDATA[
+        select tc_step from etc_testcase  where tc_name=#{tc_name} and project_id=#{project_id};
+        ]]>
+    </select>
+    <select id="getProjectInfo" parameterType="int" resultType="java.util.List" resultMap="projectMap">
+        <![CDATA[
+        select * from etc_project  where  project_id=#{project_id};
+        ]]>
+    </select>
+    <select id="getTestCaseByProjectId" parameterType="int" resultType="java.lang.String">
+        <![CDATA[
+        select tc_name from etc_testcase  where  project_id=#{project_id};
+        ]]>
+    </select>
+</mapper>
