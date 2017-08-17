@@ -24,41 +24,14 @@ public class MapStatus
                     //new ArrayList<Faxi>(),
                     0,0,new ArrayList<String>(),""));
 
-//            listRes.add(new StatusRes()
-//            {
-//                plan = new List<Plan>(),
-//                newPlan = new List<NewPlan>(),
-//                status = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-//                faxiStatus = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-//                firstrePayment = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-//                faxiList = new List<Faxi>(),
-//                flag = 0,
-//                isBehindOrOutOfDue = 0,
-//                paymentList = new List<string>(),
-//                lastRepaymentDate = ""
-//            });
-//
-//            listRes.add(new StatusRes()
-//            {
-//                plan = new List<Plan>(),
-//                newPlan = new List<NewPlan>(),
-//                status = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-//                faxiStatus = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-//                firstrePayment = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-//                faxiList = new List<Faxi>(),
-//                flag = 0,
-//                isBehindOrOutOfDue = 0,
-//                paymentList = new List<string>(),
-//                lastRepaymentDate = ""
-//            });
+
         }
 
 
         //根据索引重置指定的还款计划
-        public void ResetStatus(List<StatusRes> listsr1, int index)
+        public static void resetStatus(List<StatusRes> listsr1, int index)
         { 
         		listsr1.get(index).plan = new ArrayList<Plan>();
-                
         		listsr1.get(index).newPlan = new ArrayList<NewPlan>();
                 listsr1.get(index).status = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
                 listsr1.get(index).faxiStatus = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -70,19 +43,6 @@ public class MapStatus
                 listsr1.get(index).lastRepaymentDate = "";
         }
 
-//        //根据索引重置标签页所有还款计划
-//        public void ResetStatusForTab(int index)
-//        {
-//            MapStatus.listRes[index].plan.Clear();
-//            MapStatus.listRes[index].newPlan.Clear();
-//            MapStatus.listRes[index].status = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-//            MapStatus.listRes[index].faxiStatus = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-//            MapStatus.listRes[index].firstrePayment = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-//            MapStatus.listRes[index].faxiList = new List<Faxi>();
-//            MapStatus.listRes[index].flag = 0;
-//            MapStatus.listRes[index].isBehindOrOutOfDue = 0;
-//            MapStatus.listRes[index].paymentList = new List<string>();
-//            MapStatus.listRes[index].lastRepaymentDate = "";
-//        }
+
     }
 
