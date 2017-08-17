@@ -42,10 +42,8 @@
             });
 
         });
-    });
-
-
-    $(document).ready(function () {
+        
+     
         $('#btnRepayment').click(function () {
             var arr = {};
             arr.loanAmount = $("input[name='loanAmount']").val();
@@ -82,7 +80,40 @@
             });
 
         });
+        
+        
+        $('#btnClear').click(function () {
+            $("input[name='loanAmount']").val("");
+           	$("input[name='periods']").val("");
+            $("input[name='rate']").val("");
+            $("input[name='monthRate']").val("");
+            $("input[name='serviceFeeRate']").val("");
+            $("input[name='headServiceFeeRate']").val("");
+            $("input[name='compensateFeeRate']").val("");
+            $("input[name='headCompensateFeeRate']").val("");
+            $("input[name='loanDate']").val("");
+            $("input[name='repaymentDate']").val("");
+            $("input[name='numInstallmentByFee']").val("");
+            $.ajax({
+                url: "/loan/clearRepaymentPlan",
+                type: 'post',
+                dataType: 'json',
+                data: """,
+                contentType: "application/json;charset=UTF-8",
+                success: function (data, status) {
+                   console.warn('清空成功')
+                },
+                fail: function (err, status) {
+                    console.log(err)
+                }
+            });
+
+        });
+        
+        
     });
+
+
     
     
     function getTr(plan) {
@@ -113,7 +144,7 @@
             <td><label>借款日期：</label><input name="loanDate" value="2016/12/20"/></td>
             <td><label>还款日：</label><input name="repaymentDate" value="15"/></td>
             <td><label>手续费分期期数：</label><input name="numInstallmentByFee" value="3"/></td>
-            <td><input type="button" value="借款" id='btnLoan'/></td>
+            <td><input type="button" value="借款" id='btnLoan'/> <input type="button" value="重置" id='btnClear'/></td>
         </tr>
         <tr>
            
