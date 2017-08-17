@@ -40,6 +40,12 @@ public class PlanController {
 	    	return "success";
 	    }
 	
+    @ResponseBody
+	@RequestMapping(value = "/loan/clearRepaymentPlan", method = RequestMethod.POST)
+	public String  clearRepaymentPlan(){
+    	MapStatus.resetStatus(MapStatus.listRes, 0);
+    	return "";
+    }
 	
 	@ResponseBody
 	@RequestMapping(value = "/loan/getRepaymentPlan", method = RequestMethod.POST)
