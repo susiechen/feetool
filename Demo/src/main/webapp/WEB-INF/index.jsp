@@ -22,7 +22,7 @@
             var req = JSON.stringify(arr);
              console.warn(req);
             $.ajax({
-                url: "/loan/getRepaymentPlan",
+                url: "loan/getRepaymentPlan",
                 type: 'post',
                 dataType: 'json',
                 data: req,
@@ -60,7 +60,7 @@
             var req = JSON.stringify(arr);
              console.warn(req);
             $.ajax({
-                url: "/loan/repaymentLists",
+                url: "loan/repaymentLists",
                 type: 'post',
                 dataType: 'json',
                 data: req,
@@ -95,10 +95,10 @@
             $("input[name='repaymentDate']").val("");
             $("input[name='numInstallmentByFee']").val("");
             $.ajax({
-                url: "/loan/clearRepaymentPlan",
+                url: "loan/clearRepaymentPlan",
                 type: 'post',
                 dataType: 'json',
-                data: """,
+                data: "",
                 contentType: "application/json;charset=UTF-8",
                 success: function (data, status) {
                    console.warn('清空成功')
@@ -125,8 +125,8 @@
     }
 </script>
 
-<h2 style="" align="center">借款工具</h2>
-<form action="/loan/getRepaymentPlan" style="height: 268px; " method="post">
+<h2 style="" align="center">借款费用计算工具</h2>
+<form action="loan/getRepaymentPlan" style="height: 268px; " method="post">
     <table align = "center" border="0" cellpadding="0" cellspacing="20"  style="text-align: right;" >
         <tr>
             <td><label>借款金额：</label><input name="loanAmount" value="150000"/></td>
@@ -153,11 +153,11 @@
             <td><label>还款日期：</label><input name="currentPaymentDate" value="2016/12/21"/></td>
             <td><label>还款金额：</label><input name="repaymentAmt" value="15"/></td>
             <td><label>期数：</label><input name="currentPeriod" value="1"/></td>
-            <td><label>罚息：</label><input name="overdueFee" value="3"/></td>
+            <td><label>罚息：</label><input name="overdueFee" value="0"/></td>
             
         </tr>
         <tr>
-        	<td><label>催收：</label><input name="collectionFee" value="1000"/></td>
+        	<td><label>催收：</label><input name="collectionFee" value="0"/></td>
 			<td></td>
 			<td></td>
             <td><input type="button" value="还款" id='btnRepayment'/></td>

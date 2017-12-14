@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite" parallel="false">
+	<listeners>
+		<listener class-name="org.uncommons.reportng.HTMLReporter" />
+		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+		<listener class-name="com.Interface.service.AssertionListener" />
+	</listeners>
+	<!-- 1(线下)、2(准生产)、3(线上) -->
+	<parameter name="envId" value="1" />
+	<test name="Account" verbose="2" preserve-order="true">
+		<groups>
+			<define name="all">
+				<include name="offline" />
+			</define>
+			<run>
+				<include name="all" />
+			</run>
+		</groups>
+		<classes>
+			<class name="com.Interface.TestData.BeforeSuit"/>
+            <class name="com.ppdai.TestCases.TradeTest">
+			<methods>
+			  <!--   <include name="tradeTest"></include>
+			   <include name="fullTest"></include>-->
+			   <include name="cancelTest"></include>
+			</methods>
+			</class>
+		</classes>
+	</test>
+</suite>

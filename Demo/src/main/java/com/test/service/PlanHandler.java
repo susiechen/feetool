@@ -33,16 +33,14 @@ public class PlanHandler {
 			  int    numInstallmentByFee,//�����ѷ�����
 			  double serviceFeeRate,
 			  double headServiceFeeRate){
-		  //�����洢plan��list
+		  //planlist
 		  List<Plan> planList=new ArrayList<>();
 		  
-	      //for test
-	     // System.out.println("���㻹��ƻ���"+firstRepaymentDay+","+loanTime);
 	    	
 	      List<LoanProductFeeVo> loanList = handler.getPrincleAndInterestForTerm(periods, loanTime, firstRepaymentDay, loanAmount,amount, rate, monthRate);
-	       //��������
+	       //加赔费
           Double compensateFee = handler.ComputeJiaPei(loanAmount, compensateFeeRate, headCompensateFeeRate,periods);
-           //����������
+           //手续费
            Double serviceFee = handler.ComputeShouXuFei(loanAmount, serviceFeeRate, headServiceFeeRate, numInstallmentByFee);
 	       
 		   for(int i=1; i<=periods;i++){ 
@@ -54,13 +52,13 @@ public class PlanHandler {
 			   plan.setCompensateFee(compensateFee);
 			   plan.setLoanDays(loanList.get(i-1).getLoanDays()); 
 			   plan.setRepaymentDay(loanList.get(i-1).getRepaymentDay());
-			   //����������
+			   //手续费
 			   if(numInstallmentByFee<periods && i>numInstallmentByFee)
-			       plan.setServiceFee(0.00); //�����ѷ�����С�ڽ������
+			       plan.setServiceFee(0.00); //设置其他期的手续费为0
 			   else 
 				  plan.setServiceFee(serviceFee);
 			  
-			   //����Ӧ�����
+			   //
 			   plan.setAmount(loanList.get(i-1).getPrincipalAddInterset()+compensateFee+serviceFee);
 			   
 			   planList.add(plan); 
@@ -72,14 +70,14 @@ public class PlanHandler {
 	  
 	    //test method
 	    public static void main(String [] args){
-	    	double loanAmount=150000;
+	    	double loanAmount=100;
 	    	double rate=0.0004;
 	    	double monthRate=0.012;	
 	    	System.out.println(loanAmount+","+rate+","+monthRate);
 	    	FeeHandler handler=new FeeHandler();
 //	    	System.out.println(handler.getTermPrincipalAndInterest(6, 1000000,0.012));
 	    	Date date =new Date("2016/12/20");
-	    	Map<String, Object> map = handler.computeDayDiffAmount(15, date);
+	    	Map<String, Object> map = handler.computeDayDiffAmount(20, date);
 	    	double amount = handler.generatePerfectDayDiffAmount(loanAmount, Integer.parseInt(map.get("flag").toString()),Integer.parseInt(map.get("chae").toString()) , rate);
 	    	
 	    	 System.out.println("000000:"+amount);

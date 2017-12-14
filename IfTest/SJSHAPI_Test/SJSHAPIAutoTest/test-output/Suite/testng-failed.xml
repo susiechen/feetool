@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Suite]">
+  <parameter name="envId" value="1"/>
+  <listeners>
+    <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+    <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
+    <listener class-name="com.Interface.service.AssertionListener"/>
+  </listeners>
+  <test name="Account(failed)">
+    <groups>
+      <run>
+        <include name="all"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="com.ppdai.TestCases.TradeTest">
+        <methods>
+          <include name="cancelTest" invocation-numbers="0"/>
+          <include name="tearDown"/>
+          <include name="classSetup"/>
+        </methods>
+      </class> <!-- com.ppdai.TestCases.TradeTest -->
+      <class name="com.Interface.TestData.BeforeSuit">
+        <methods>
+          <include name="firstSetup"/>
+        </methods>
+      </class> <!-- com.Interface.TestData.BeforeSuit -->
+    </classes>
+  </test> <!-- Account(failed) -->
+</suite> <!-- Failed suite [Suite] -->

@@ -29,7 +29,10 @@ public class FeeHandler {
     	 String perfectRepayDate = null;
     	 int chae = 1, flag=0;
     	 int day = 0;
-			day = helper.getDateInfo(startTime, 2);
+    	    if(helper==null)
+    	    	 return null;
+    	    else
+    	    	day = helper.getDateInfo(startTime, 2);
          //��ȡ����յ���
     	 //��ʵ�ʽ����=����������ʱ,
     	   if(normalDay==day){ 
@@ -40,7 +43,6 @@ public class FeeHandler {
     	 //��ʵ�ʽ���աٻ���������ʱ ����ȡ��������գ�����ո���������յĲ��С��15
     		   
     		   //�������������
-    		   //�ȼ��㵱ǰ�����ڵĽ����
     		   String repaymentDate=helper.getDateInfo(startTime, 0)+"/"+helper.getDateInfo(startTime, 1)+"/"+normalDay;
     		   System.out.println("----repaymentDate:"+repaymentDate);
     		   try {
@@ -72,9 +74,8 @@ public class FeeHandler {
 					firstRepaymentDate=helper.getNextMonthDate(s.parse(perfectRepayDate));
 					flag=(offset>0)?1:0;	
 				}
-				//
 				
-				//���Ϊ�������������յĲ��
+				//计算差额天数
 				chae=Math.abs(helper.dateDiff(startTime,s.parse(perfectRepayDate)));
 
 				
@@ -83,7 +84,7 @@ public class FeeHandler {
 				e.printStackTrace();
 			}
     	   }
-		 //�ѻ����գ���flag�ŵ�map��
+		 //
     	   map.put("firstRapaymentDate", firstRepaymentDate);
     	   map.put("chae", chae);
     	   map.put("flag", flag);
@@ -92,9 +93,9 @@ public class FeeHandler {
     	return map;
      }
 	 
-	//����ÿ�ڱ�Ϣ��
+
 	 /*
-	  * �����������������㱾Ϣ��
+	  * 计算本息和
 	  */
 	public int getTermPrincipalAndInterest(int periods,double investAmount,double monthRate){
 		
@@ -103,12 +104,12 @@ public class FeeHandler {
 		  System.out.println("sum="+sum); 
 		  
 //		  System.out.println("test:"+periods+","+investAmount+","+monthRate);
-		  return  (int) Math.round(sum);  //��λΪ��
+		  return  (int) Math.round(sum);  
 			
 		}
 	
 	  
-    //������������ȶϢ����������
+    //计算完美本金
     public double generatePerfectDayDiffAmount(double amount, int flag, int chae, double rate)
     {
     	double amount1 = 0;
@@ -121,6 +122,10 @@ public class FeeHandler {
         else if (flag == 1)
         {
             amount1 = amount * (1 + chae * rate);
+        }
+        else
+        {
+        	amount1=amount;
         }
 
         return amount1;
@@ -156,15 +161,14 @@ public class FeeHandler {
 				try {  
 					 //����ÿ��֮�������
 					   if(i==1){
-							System.out.println("���㱾Ϣ�ͣ�"+firstRepaymentDay+","+loanTime);
+							System.out.println("首期还款日："+firstRepaymentDay+","+loanTime);
 						   	loanDays=helper.dateDiff(f.parse(loanTime), f.parse(firstRepaymentDay));
-						   	System.out.println("���㱾Ϣ�ͣ�"+firstRepaymentDay);
+						   	//System.out.println("���㱾Ϣ�ͣ�"+firstRepaymentDay);
 						   }
 					   else{
 						    loanDays=helper.dateDiff(f.parse(list.get(i-2)),f.parse(list.get(i-1)));
 					   }
 						 //��Ϣ����������
-					    //��Ϣ��ʽ��δ������*��������*������
 //						  interest=helper.getSiSheWuBuRu(loanAmount*rate*loanDays);
 						 
 						   interest=helper.getSiSheWuBuRu(unpaidPrincipal*rate*loanDays);
@@ -181,8 +185,6 @@ public class FeeHandler {
 				    	        principal=sum-interest; 
 				    	        loanProductFee.setPrincipalAddInterset(sum);
 				       }
-				       //��ֵ
-				      // ���һ����Ҫ���¼���
 //						loanProductFee.setPrincipalAddInterset(sum);
 						loanProductFee.setPrincipal(principal);
 						loanProductFee.setInterset(interest);
@@ -200,9 +202,8 @@ public class FeeHandler {
 	    }
 	   
 	    /*
-	     * ��������
+	     * 计算加赔费
 	     */
-//        Double jiapei = cf.ComputeJiaPei(tmpAmount, jiapeifeilv, kantoujiapei,fenqi);
         public Double ComputeJiaPei(double tmpAmount, double jiapeifeilv,double kantoujiapei,int fenqi)
         {
             Double zongjiapei = (double) Math.round(tmpAmount * jiapeifeilv);
@@ -237,7 +238,7 @@ public class FeeHandler {
 //	    	System.out.println(loanAmount+","+rate+","+monthRate);
 	    	FeeHandler handler=new FeeHandler();
 	    	Helper helper=new Helper();
-	    	System.out.println(handler.getTermPrincipalAndInterest(3, 150000,0.012));
+	    	System.out.println(handler.getTermPrincipalAndInterest(3, 100,0.009));
 //	        System.out.println("------------"+handler.generatePerfectDayDiffAmount(300000, 1, 6, 0.0004));
 //	    	List<LoanProductFeeVo> list = handler.getPrincleAndInterestForTerm(6,"2017/01/15","2017/02/15",1000000,1000000,0.0004,0.012);
 //	        for(LoanProductFeeVo l: list)
@@ -251,7 +252,7 @@ public class FeeHandler {
 			//	    	   map.put("flag", flag);
 			//	    	   map.put("perfectRepayDate", perfectRepayDate);
 	        
-	        Date date =new Date("2017/07/25");
+	        Date date =new Date("2016/12/20");
 //	        Date date =new Date("2017/07/03");
 	     	System.out.println(helper.getDateInfo(date, 0)+","+helper.getDateInfo(date, 1)+","+helper.getDateInfo(date, 2));
 				        	

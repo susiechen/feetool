@@ -64,9 +64,10 @@ public class Helper {
         else if(flag==1)
         	return caled.get(Calendar.MONTH)+1;//�õ��£���Ϊ��0��ʼ�ģ�����Ҫ��1   
         else
+        	
         	return caled.get(Calendar.DAY_OF_MONTH);//�õ���
         
-//        System.out.println("year:"+year+"month:"+month+"day:"+day);
+
     	
     }
     

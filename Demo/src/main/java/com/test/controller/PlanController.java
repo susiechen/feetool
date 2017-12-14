@@ -80,7 +80,7 @@ public class PlanController {
 				monthRate, amount,//
 				compensateFeeRate, headCompensateFeeRate, numInstallmentByFee, 
 				serviceFeeRate, headServiceFeeRate);
-        //�������ڻ���
+        //初始化
 		MapStatus.init();
         MapStatus.listRes.get(0).status[0] = 1;
         MapStatus.listRes.get(0).plan = list;
@@ -94,9 +94,6 @@ public class PlanController {
 	           
 	        }
         }
-        
-
-        
         
 		System.out.println(periods+","+ loanDate+"," +firstRepaymentDay+","+ loanAmount+","+ rate+","+ 
 				monthRate+","+ amount+","+compensateFeeRate+","+ headCompensateFeeRate+","+ numInstallmentByFee+","+ 

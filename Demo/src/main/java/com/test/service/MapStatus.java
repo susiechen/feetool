@@ -1,4 +1,3 @@
-﻿
 package com.test.service;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,11 +6,10 @@ import com.test.model.NewPlan;
 import com.test.model.Plan;
 import com.test.model.StatusRes;
 
-public class MapStatus
-    {
+
+public class MapStatus{
         public static List<StatusRes> listRes = new ArrayList<StatusRes>();
-
-
+        
         //初始化状态列表
         public static void init()
         {
@@ -23,8 +21,6 @@ public class MapStatus
                     new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                     //new ArrayList<Faxi>(),
                     0,0,new ArrayList<String>(),""));
-
-
         }
 
 
@@ -42,7 +38,5 @@ public class MapStatus
                 listsr1.get(index).paymentList = new ArrayList<String>();
                 listsr1.get(index).lastRepaymentDate = "";
         }
-
-
     }
 
