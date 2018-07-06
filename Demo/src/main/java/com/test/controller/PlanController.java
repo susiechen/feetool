@@ -155,7 +155,6 @@ public class PlanController {
 			    		 repaymentDate,originalAmt,startTime,rate, monthRate, periods, currentPeriod, 1,numInstallmentByFee);
 			}
 				
-				//			ModelAndView modelAndView =new ModelAndView("success");
 			List newPlan=null;
 			if(currentPeriod==1)
 				 newPlan = MapStatus.listRes.get(0).plan;
