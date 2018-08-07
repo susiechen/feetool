@@ -1,0 +1,25 @@
+{ "name":"auditV1",
+  "request":{
+	 "url":"/v1/audit",
+	 "method":"post",
+	 "body":
+		{
+		    "platformCode": "PPD",
+		    "productCode": "SJSH",
+		    "userId": "24739321"
+		}
+	}
+};
+{
+  "name":"auditV2",
+  "request":{
+	 "url":"/v2/audit",
+	 "method":"post",
+	 "body":
+		{
+		    "platformCode": "PPD",
+		    "productCode": "SJSH",
+		    "userId": "24739321"
+		}
+	}
+}
